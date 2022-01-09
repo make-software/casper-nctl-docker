@@ -1,0 +1,61 @@
+FROM ubuntu:focal
+
+ARG GITBRANCH=release-1.4.4
+
+# DEBIAN_FRONTEND required for tzdata dependency install
+RUN apt-get update \
+      && DEBIAN_FRONTEND="noninteractive" \
+      apt-get install -y sudo tzdata curl gnupg gcc git ca-certificates \
+              protobuf-compiler libprotobuf-dev supervisor \
+              pkg-config libssl-dev make build-essential gettext-base lsof \
+      && rm -rf /var/lib/apt/lists/*
+
+SHELL ["/bin/bash", "-c"] 
+
+# install cmake
+RUN curl -Ls https://github.com/Kitware/CMake/releases/download/v3.17.3/cmake-3.17.3-Linux-x86_64.tar.gz | sudo tar -C /usr/local --strip-components=1 -xz
+
+# install rust nigthly and rustup
+RUN curl -f -L https://static.rust-lang.org/rustup.sh -O \
+    && sh rustup.sh -y --default-toolchain "nightly-2021-12-15"
+ENV PATH="$PATH:/root/.cargo/bin"
+
+# set few environment variables needed for the nctl build scripts
+ENV NCTL="/root/casper-node/utils/nctl"
+ENV NCTL_CASPER_HOME="/root/casper-node"
+ENV NCTL_COMPILE_TARGET="release"
+
+# clone the casper-node repos and build binaries
+RUN git clone https://github.com/casper-network/casper-node-launcher.git ~/casper-node-launcher \
+    && cd ~/casper-node-launcher && cargo build --release \
+    && git clone -b $GITBRANCH https://github.com/casper-network/casper-node.git ~/casper-node \
+    && source ~/casper-node/utils/nctl/sh/assets/compile.sh 
+
+# we'll run clean-stuff.sh after build to remove intermediate files and keep the image lighter
+COPY --chown=casper:casper ./clean-stuff.sh .
+RUN chmod +x clean-stuff.sh
+RUN ./clean-stuff.sh
+
+## Second stage. Leave behind build tools and:
+## (1) reinstall needed dependencies to run NCTL nodes.
+## (2) copy binaries built in first stage.
+##
+FROM ubuntu:focal
+
+RUN apt-get update \
+      && apt-get install -y sudo curl git ca-certificates jq supervisor lsof python3-pip \
+      && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -ms /bin/bash casper && echo "casper:casper" | chpasswd && adduser casper sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+USER casper
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /home/casper
+
+RUN python3 -m pip install toml
+
+COPY --from=0 --chown=casper:casper /root/casper-node-launcher ./casper-node-launcher
+COPY --from=0 --chown=casper:casper /root/casper-node ./casper-node
