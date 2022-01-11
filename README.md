@@ -20,7 +20,7 @@ docker build -f casper-nctl-base.Dockerfile --build-arg GITBRANCH=release-1.4.4 
 Now, extend the base image with a start service script:
 
 ```bash
-docker build -f nctl-service.Dockerfile -t casper-nctl:v144 .
+docker build -f casper-nctl-service.Dockerfile -t casper-nctl:v144 .
 ```
 
 The image is tagged as v144, which is the latest `casper-node` version at the moment of writing these instructions. To keep other scripts independent of the version, tag the image also as `latest`.
@@ -34,7 +34,7 @@ docker tag casper-nctl:v144 casper-nctl:latest
 To run the container in your local environment, write:
 
 ```bash
-docker run -it --name mynctl -d -p 11101:11101 casper-node:latest
+docker run -it --name mynctl -d -p 11101:11101 casper-nctl:latest
 ```
 
 To get the faucet account secret key, write:
@@ -42,6 +42,16 @@ To get the faucet account secret key, write:
 ```bash
 docker exec -t mynctl cat /home/casper/casper-node/utils/nctl/assets/net-1/faucet/secret_key.pem
 ```
+
+In Windows, activate `nctl-*` commands by running the following command in a Powershell terminal:
+
+```
+. .\nctl-activate -container mynctl
+```
+
+where `mynctl` is the name of the container.
+
+Now you can write just `nctl-view-faucet-account`.
 
 ## Use the Docker image in a GitHub action
 
