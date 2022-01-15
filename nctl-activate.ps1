@@ -140,3 +140,14 @@ function nctl-kv-storage-set-key($params) {docker exec -t $NCTL_DOCKER_CONTAINER
 function nctl-exec-upgrade-scenario-1($params) {docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "source $NCTL_HOME/sh/scenarios-upgrades/upgrade_scenario_01.sh $params" } 
 function nctl-exec-upgrade-scenario-2($params) {docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "source $NCTL_HOME/sh/scenarios-upgrades/upgrade_scenario_02.sh $params" } 
 function nctl-exec-upgrade-scenario-3($params) {docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "source $NCTL_HOME/sh/scenarios-upgrades/upgrade_scenario_03.sh $params" } 
+
+# Secret keys
+function nctl-view-faucet-secret-key() { docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "cat $NCTL_HOME/assets/net-1/faucet/secret_key.pem"; }
+function nctl-view-user-secret-key($params) { 
+    $userx=$params.replace('=', '-')
+    docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "cat $NCTL_HOME/assets/net-1/users/$userx/secret_key.pem";
+}
+function nctl-view-node-secret-key($params) { 
+    $userx=$params.replace('=', '-')
+    docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "cat $NCTL_HOME/assets/net-1/nodes/$nodex/keys/secret_key.pem";
+}

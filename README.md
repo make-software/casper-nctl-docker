@@ -34,24 +34,38 @@ docker tag casper-nctl:v144 casper-nctl:latest
 To run the container in your local environment, write:
 
 ```bash
-docker run -it --name mynctl -d -p 11101:11101 casper-nctl:latest
+docker run --rm -it --name mynctl -d -p 11101:11101 casper-nctl:latest
 ```
 
-To get the faucet account secret key, write:
+To activate `nctl-*` commands in your local host, run the following command in a bash console:
 
 ```bash
-docker exec -t mynctl cat /home/casper/casper-node/utils/nctl/assets/net-1/faucet/secret_key.pem
+source nctl-activate.sh mynctl
 ```
 
-In Windows, activate `nctl-*` commands by running the following command in a Powershell terminal:
+In a Powershell terminal, run:
 
-```
-. .\nctl-activate -container mynctl
+```bash
+. .\nctl-activate.ps1 mynctl
 ```
 
 where `mynctl` is the name of the container.
 
-Now you can write just `nctl-view-faucet-account`.
+Now you can write just `nctl-view-faucet-account`, `nctl-stop`, etc.
+
+Sometimes you may need the secret key of the faucet or one of the predefined users. After activating `nctl-*` commands you can run:
+
+```bash
+nctl-view-fauce-secret-key
+```
+
+```bash
+nctl-view-user-secret-key user=3
+```
+
+```bash
+nctl-view-node-secret-key node=5
+```
 
 ## Use the Docker image in a GitHub action
 
