@@ -88,7 +88,7 @@ jobs:
       # Label used to access the service container
       casper-nctl:
         # Docker Hub image
-        image: davidatwhiletrue/casper-nctl:v143rev4
+        image: makesoftware/casper-nctl:latest
         options: --name casper-nctl
         ports:
           # Opens tcp port 6379 on the host and service container
@@ -108,30 +108,4 @@ jobs:
         run: dotnet build --no-restore
       - name: Test
         run: dotnet test --no-build --verbosity normal --settings Casper.Network.SDK.Test/test.runsettings --filter="TestCategory=NCTL" 
-```
-
-
-## Use the Docker image with Gitpod
-
-Create a workspace in Gitpod based on this repository. In your browser, navigate to:
-
-```
-https://gitpod.io/#https://github.com/make-software/casper-nctl-docker
-```
-
-When the workspace is ready, start NCTL executing the following commands:
-
-```bash
-su casper
-cd
-source casper-node/utils/nctl/activate
-nctl-assets-setup
-nctl-start
-exit
-```
-
-NCTL is up and running when the REST service returns the node status:
-
-```bash
-curl localhost:14101/status
 ```
