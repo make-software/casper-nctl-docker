@@ -9,6 +9,7 @@ WORKDIR /home/casper
 
 ENV NCTL="/home/casper/casper-node/utils/nctl"
 ENV NCTL_CASPER_HOME="/home/casper/casper-node"
+ENV NCTL_CASPER_NODE_LAUNCHER_HOME="/home/casper/casper-node-launcher"
 RUN echo "source casper-node/utils/nctl/activate" >> .bashrc
 RUN echo "alias casper-client=/home/casper/casper-node/target/release/casper-client" >> .bashrc
 

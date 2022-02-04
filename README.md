@@ -1,41 +1,20 @@
 # Casper NCTL - Docker Container
 
-This repository contains instructions to prepare an image for a Docker container that runs Casper NCTL as a service.
+[NCTL](https://github.com/casper-network/casper-node/tree/release-1.4.3/utils/nctl) is a CLI application to control one or multiple Casper networks locally. Many developers wish to spin up relatively small test networks to localize their testing before deploying to the blockchain.
 
-### Build the Docker image
+## How to use this image
 
-First, build a base image. This downloads and compiles the `casper-node-launcher` and `casper-node` repositories from GitHub.
+### Start a network with five nodes
 
-```bash
-docker build -f casper-nctl-base.Dockerfile -t casper-nctl:base .
-```
-
-Optionally, use the argument `GITBRANCH` to indicate which branch from the `casper-node` repository download and build:
+To create a container with the NCTL image write:
 
 ```bash
-docker build -f casper-nctl-base.Dockerfile --build-arg GITBRANCH=release-1.4.4 -t casper-nctl:base .
+docker run --rm -it --name mynctl -d -p 11101:11101 -p 14101:14101 -p 18101:18101 makesoftware/casper-nctl
 ```
 
+where `mynctl` is the name of the container. The ports for the first node in the network are published to the host.
 
-Now, extend the base image with a start service script:
-
-```bash
-docker build -f casper-nctl-service.Dockerfile -t casper-nctl:v144 .
-```
-
-The image is tagged as v144, which is the latest `casper-node` version at the moment of writing these instructions. To keep other scripts independent of the version, tag the image also as `latest`.
-
-```bash
-docker tag casper-nctl:v144 casper-nctl:latest
-```
-
-## Run the container
-
-To run the container in your local environment, write:
-
-```bash
-docker run --rm -it --name mynctl -d -p 11101:11101 casper-nctl:latest
-```
+### Activate `nctl-*` commands
 
 To activate `nctl-*` commands in your local host, run the following command in a bash console:
 
@@ -51,21 +30,46 @@ In a Powershell terminal, run:
 
 where `mynctl` is the name of the container.
 
-Now you can write just `nctl-view-faucet-account`, `nctl-stop`, etc.
+Now you can write in the host machine commands like `nctl-view-faucet-account`, `nctl-transfer-native`, etc. For a complete list of commands, visit [this page](https://github.com/casper-network/casper-node/blob/release-1.4.3/utils/nctl/docs/commands.md).
 
-Sometimes you may need the secret key of the faucet or one of the predefined users. After activating `nctl-*` commands you can run:
+Sometimes you may need the secret key of the faucet, a node or one of the predefined users. After activating `nctl-*` commands you can execute the following commands:
 
 ```bash
-nctl-view-fauce-secret-key
+nctl-view-faucet-secret-key
+```
+
+```bash
+nctl-view-node-secret-key node=1
 ```
 
 ```bash
 nctl-view-user-secret-key user=3
 ```
 
+### Run the container with static account keys
+
+Each time the container is started, nctl runs with a set of randomly generated account keys. To use a set of static and pregenerated account keys, run the container with an extra parameter:
+
 ```bash
-nctl-view-node-secret-key node=5
+docker run --rm -it --name mynctl -d -p 11101:11101 makesoftware/casper-nctl /bin/bash -c "/home/casper/restart-static-accounts.sh"
 ```
+
+### Stop the container
+
+To stop the container write:
+
+```bash
+docker stop mynctl
+```
+
+### Container shell access
+
+The docker exec command allows you to run commands inside a Docker container. The following command line will give you a bash shell inside your nctl container:
+
+$ docker exec -it mynctl bash
+
+In the container shell you can use the `casper-client` tool as well as the `nctl-*` set of commands.
+
 
 ## Use the Docker image in a GitHub action
 

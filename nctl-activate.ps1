@@ -148,6 +148,6 @@ function nctl-view-user-secret-key($params) {
     docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "cat $NCTL_HOME/assets/net-1/users/$userx/secret_key.pem";
 }
 function nctl-view-node-secret-key($params) { 
-    $userx=$params.replace('=', '-')
+    $nodex=$params.replace('=', '-')
     docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "cat $NCTL_HOME/assets/net-1/nodes/$nodex/keys/secret_key.pem";
 }
