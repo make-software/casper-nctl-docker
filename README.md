@@ -95,8 +95,10 @@ jobs:
         image: makesoftware/casper-nctl:latest
         options: --name casper-nctl
         ports:
-          # Opens tcp port 6379 on the host and service container
+          # Opens RPC, REST and events ports on the host and service container
           - 11101:11101
+          - 14101:14101
+          - 18101:18101
           
     steps:
       - uses: actions/checkout@v2
