@@ -31,10 +31,10 @@ RUN git clone https://github.com/casper-network/casper-node-launcher.git ~/caspe
     && git clone -b $GITBRANCH https://github.com/casper-network/casper-node.git ~/casper-node \
     && source ~/casper-node/utils/nctl/sh/assets/compile.sh 
 
-# we'll run clean-stuff.sh after build to remove intermediate files and keep the image lighter
-COPY --chown=casper:casper ./clean-stuff.sh .
-RUN chmod +x clean-stuff.sh
-RUN ./clean-stuff.sh
+# run clean-build-artifacts.sh to remove intermediate files and keep the image lighter
+COPY --chown=casper:casper ./clean-build-artifacts.sh .
+RUN chmod +x clean-build-artifacts.sh
+RUN ./clean-build-artifacts.sh
 
 ## Second stage. Leave behind build tools and:
 ## (1) reinstall needed dependencies to run NCTL nodes.

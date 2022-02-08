@@ -14,8 +14,8 @@ RUN echo "source casper-node/utils/nctl/activate" >> .bashrc
 RUN echo "alias casper-client=/home/casper/casper-node/target/release/casper-client" >> .bashrc
 
 COPY --chown=casper:casper ./restart.sh .
-COPY --chown=casper:casper ./restart-static-accounts.sh .
-COPY --chown=casper:casper ./net-1-static-accounts.tar.gz .
+COPY --chown=casper:casper ./restart-with-predefined-accounts.sh .
+COPY --chown=casper:casper ./net-1-predefined-accounts.tar.gz .
 
 EXPOSE 11101-11105 14101-14105 18101-18105
 

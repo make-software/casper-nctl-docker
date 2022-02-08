@@ -46,12 +46,12 @@ nctl-view-node-secret-key node=1
 nctl-view-user-secret-key user=3
 ```
 
-### Run the container with static account keys
+### Run the container with predefined account keys
 
-Each time the container is started, nctl runs with a set of randomly generated account keys. To use a set of static and pregenerated account keys, run the container with an extra parameter:
+Each time the container is started, nctl runs with a set of randomly generated account keys. To use a set of predefined and pregenerated account keys, run the container with an extra parameter:
 
 ```bash
-docker run --rm -it --name mynctl -d -p 11101:11101 makesoftware/casper-nctl /bin/bash -c "/home/casper/restart-static-accounts.sh"
+docker run --rm -it --name mynctl -d -p 11101:11101 makesoftware/casper-nctl /bin/bash -c "/home/casper/restart-with-predefined-accounts.sh"
 ```
 
 ### Stop the container
@@ -66,7 +66,9 @@ docker stop mynctl
 
 The docker exec command allows you to run commands inside a Docker container. The following command line will give you a bash shell inside your nctl container:
 
-$ docker exec -it mynctl bash
+```bash
+docker exec -it mynctl bash
+```
 
 In the container shell you can use the `casper-client` tool as well as the `nctl-*` set of commands.
 
