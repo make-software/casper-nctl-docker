@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mynctl:
+    image: makesoftware/casper-nctl
+    container_name: mynctl
+    ports:
+      - 11101-11105:11101-11105
+      - 14101-14105:14101-14105
+      - 18101-18105:18101-18105
+  cors-anywhere:
+    container_name: cors-anywhere
+    build:
+      context: .
+      dockerfile: cors-anywhere.Dockerfile
+    tty: true
+    environment:
+      PORT: 11100
+    ports:
+      - 11100:11100
