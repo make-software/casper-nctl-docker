@@ -39,6 +39,7 @@ RUN ./clean-build-artifacts.sh
 ## Second stage. Leave behind build tools and:
 ## (1) reinstall needed dependencies to run NCTL nodes.
 ## (2) copy binaries built in first stage.
+## (3) add scripts and predefined accounts.
 ##
 FROM ubuntu:focal
 
