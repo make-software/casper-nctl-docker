@@ -33,7 +33,7 @@ configure a Build Rule in Docker Hub as follows:
 | Source Type         | Tag                             |
 | Source              | `/v([0-9.]+)$/`                 |
 | Docker Tag          | `v{\1}`                         |
-| Dockerfile location | `./casper-nctl-base.Dockerfile` |
+| Dockerfile location | `./casper-nctl.Dockerfile`      |
 | Build context       | `/`                             |
 
 More information: [Set up Automated Builds](https://docs.docker.com/docker-hub/builds/) 
