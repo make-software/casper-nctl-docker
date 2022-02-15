@@ -72,6 +72,29 @@ docker exec -it mynctl bash
 
 In the container shell you can use the `casper-client` tool as well as the `nctl-*` set of commands.
 
+## Use `cors-anywhere` to interact with the nodes from a browser
+
+Browsers block direct RPC calls to Casper nodes due to CORS. If you're developing a web app you may use `cors-anywhere` to overcome this situation. 
+
+The `cors` folder in this repository contains a Docker Compose configuration to start a node.js server running `cors-anywhere` in addition to the NCTL container. To start both containers run the following command:
+
+```bash
+cd cors
+docker compose up
+```
+
+Next, change your web app configuration to send the RPC calls to the node.js server indicating the casper node it has to redirect the traffic to:
+
+```
+http://127.0.0.1:11100/http://mynctl:11101/rpc
+```
+
+If you require a network with predefined accounts, starts the containers with this other compose file:
+
+```bash
+cd cors
+docker compose -f .\docker-compose-with-predefined-accounts.yml up
+```
 
 ## Use the Docker image in a GitHub action
 
