@@ -1,28 +1,39 @@
 # Casper NCTL - Docker Container
 
-## Build the Docker image
+## Build the Docker image locally
 
-First, build a base image. This downloads and compiles the `casper-node-launcher` and `casper-node` repositories from GitHub.
-
-```bash
-docker build -f casper-nctl-base.Dockerfile -t casper-nctl:base .
-```
-
-Optionally, use the argument `GITBRANCH` to indicate which branch from the `casper-node` repository download and build:
+To build the NCTL docker image run `docker build` as follows:
 
 ```bash
-docker build -f casper-nctl-base.Dockerfile --build-arg GITBRANCH=release-1.4.4 -t casper-nctl:base .
+docker build -f casper-nctl.Dockerfile --build-arg GITBRANCH=release-1.4.4 -t casper-nctl:v144 .
 ```
 
+The argument `GITBRANCH` indicates which branch from the `casper-node` repository docker 
+will download and build.
 
-Now, extend the base image with a start service script:
-
-```bash
-docker build -f casper-nctl-service.Dockerfile -t casper-nctl:v144 .
-```
-
-The image is tagged as v144, which is the latest `casper-node` version at the moment of writing these instructions. To keep other scripts independent of the version, tag the image also as `latest`.
+In the command above, the image is tagged as v144, which is the latest `casper-node` version 
+at the moment of writing these instructions. To keep other scripts independent of the version, 
+tag the image also as `latest` once the first build completes.
 
 ```bash
 docker tag casper-nctl:v144 casper-nctl:latest
 ```
+
+## Configure Docker Hub Automated Builds
+
+Docker Hub can automatically build and push a new image when a specific event happens in 
+the source code repository (e.g. a new commit in a branch or a new tag).
+
+As an example, to build automatically an image when there is a new version tag applied to 
+the source code repository,
+configure a Build Rule in Docker Hub as follows:
+
+| Field               | Value                           |
+|---------------------|:--------------------------------|
+| Source Type         | Tag                             |
+| Source              | `/v([0-9.]+)$/`                 |
+| Docker Tag          | `v{\1}`                         |
+| Dockerfile location | `./casper-nctl.Dockerfile`      |
+| Build context       | `/`                             |
+
+More information: [Set up Automated Builds](https://docs.docker.com/docker-hub/builds/) 
