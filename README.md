@@ -140,3 +140,7 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal --settings Casper.Network.SDK.Test/test.runsettings --filter="TestCategory=NCTL" 
 ```
+
+## Build the Docker image from sources
+
+To build the NCTL Docker image from the `casper-node` sources, follow the instructions in [BUILD](./BUILD.md) page.
