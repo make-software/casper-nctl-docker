@@ -51,7 +51,7 @@ nctl-view-user-secret-key user=3
 Each time the container is started, nctl runs with a set of randomly generated account keys. To use a set of predefined and pregenerated account keys, run the container with an extra parameter:
 
 ```bash
-docker run --rm -it --name mynctl -d -p 11101:11101 makesoftware/casper-nctl /bin/bash -c "/home/casper/restart-with-predefined-accounts.sh"
+docker run --rm -it --name mynctl -d -p 11101:11101 makesoftware/casper-nctl /bin/bash -c "source /home/casper/restart-with-predefined-accounts.sh"
 ```
 
 ### Stop the container
