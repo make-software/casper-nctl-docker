@@ -19,6 +19,21 @@ tag the image also as `latest` once the first build completes.
 docker tag casper-nctl:v144 casper-nctl:latest
 ```
 
+## Test the docker image
+
+You can test the new image with `pytest`. First, install it with `pip`:
+
+```bash
+python -m pip install --upgrade pip
+pip install pytest testinfra
+```
+
+Then, run `pytest` indicating the name of the docker image to test:
+
+```
+pytest --image casper-nctl:v144
+```
+
 ## Configure Docker Hub Automated Builds
 
 Docker Hub can automatically build and push a new image when a specific event happens in 
