@@ -8,10 +8,19 @@ services:
       - 11101-11105:11101-11105
       - 14101-14105:14101-14105
       - 18101-18105:18101-18105
+    #environment:
+      #PREDEFINED_ACCOUNTS: 'true'
+      #PATH_TO_CONFIG_TOML: '/home/casper/config/config.toml'
+      #PATH_TO_CHAINSPEC: '/home/casper/config/chainspec.toml'
+      #MINIMUM_ROUND_EXPONENT: '12'
+      #MAXIMUM_ROUND_EXPONENT: '14'
+      #DEPLOY_DELAY: '15sec'
+
   cors-anywhere:
     container_name: cors-anywhere
+    profiles: ["cors-anywhere"]
     build:
-      context: .
+      context: ./cors
       dockerfile: cors-anywhere.Dockerfile
     tty: true
     environment:
