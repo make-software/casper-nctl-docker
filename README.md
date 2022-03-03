@@ -14,6 +14,13 @@ docker run --rm -it --name mynctl -d -p 11101:11101 -p 14101:14101 -p 18101:1810
 
 where `mynctl` is the name of the container. The ports for the first node in the network are published to the host.
 
+Alternatively, you can use `docker-compose` to start and stop the container. Download the file [`docker-compose.yml`](https://raw.githubusercontent.com/make-software/casper-nctl-docker/master/docker-compose.yml) 
+in this repository and write:
+
+```bash 
+docker-compose up
+```
+
 ### Activate `nctl-*` commands
 
 To activate `nctl-*` commands in your local host, run the following command in a bash console:
@@ -48,11 +55,30 @@ nctl-view-user-secret-key user=3
 
 ### Run the container with predefined account keys
 
-Each time the container is started, nctl runs with a set of randomly generated account keys. To use a set of predefined and pregenerated account keys, run the container with an extra parameter:
+Each time the container is started, nctl runs with a set of randomly generated account keys. To use a set of predefined and pregenerated account keys, run the container with the environment variable `PREDEFINED_ACCOUNTS` set to `true`:
 
 ```bash
-docker run --rm -it --name mynctl -d -p 11101:11101 makesoftware/casper-nctl /bin/bash -c "source /home/casper/restart-with-predefined-accounts.sh"
+docker run --rm -it --name mynctl -d -p 11101:11101 --env PREDEFINED_ACCOUNTS=true makesoftware/casper-nctl
 ```
+
+### Change the settings using environment variables
+
+Using environment variables you can tweak few parameters to change the frequency of blocks and the  deploys processing speed.
+
+| Environment variable   | Default value | Description                                                                                                                                                                                                                                                                           |
+|------------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| MINIMUM_ROUND_EXPONENT | 12            | Integer between 0 and 255.  The power of two that is the number of milliseconds in the minimum round length, and therefore the minimum delay between a block and its child.  E.g. 12 means 2^12 milliseconds, i.e. about 4 seconds.                                                   |
+| MAXIMUM_ROUND_EXPONENT | 19            | Integer between 0 and 255.  Must be greater than `minimum_round_exponent`.  The power of two that is the number of milliseconds in the maximum round length, and therefore the maximum delay between a block and its child.  E.g. 19 means 2^19 milliseconds, i.e. about 8.7 minutes. |
+| DEPLOY_DELAY           | 1min          | Deploys are only proposed in a new block if they have been received at least this long ago.                                                                                                                                                                                           |
+
+You can also use your custom chainspec.toml and config.toml files:
+
+| Environment variable | Description                                                                                                                                                   |
+|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| PATH_TO_CHAINSPEC    | Absolute path to your custom `chainspec.toml` file. Usually you'll need to mount a volume connected to your host to make the file available in the container. |
+| PATH_TO_CONFIG_TOML  | Absolute path to your custom `config.toml` configuration file for the nodes.                                                                                  |
+
+Usually you'll need to mount a volume connected to your host to make the file available in the container.
 
 ### Stop the container
 
@@ -60,6 +86,12 @@ To stop the container write:
 
 ```bash
 docker stop mynctl
+```
+
+Or, if you're using `docker-compose` write:
+
+```bash
+docker-compose stop
 ```
 
 ### Container shell access
@@ -119,6 +151,11 @@ jobs:
         # Docker Hub image
         image: makesoftware/casper-nctl:latest
         options: --name casper-nctl
+        environment:
+          PREDEFINED_ACCOUNTS: 'true'
+          MINIMUM_ROUND_EXPONENT: '12'
+          MAXIMUM_ROUND_EXPONENT: '14'
+          DEPLOY_DELAY: '12sec'        
         ports:
           # Opens RPC, REST and events ports on the host and service container
           - 11101:11101
