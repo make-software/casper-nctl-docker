@@ -61,6 +61,8 @@ Each time the container is started, nctl runs with a set of randomly generated a
 docker run --rm -it --name mynctl -d -p 11101:11101 --env PREDEFINED_ACCOUNTS=true makesoftware/casper-nctl
 ```
 
+If you're using the `docker-compose` command, add the environment variable to the `nctl` service.
+
 ### Change the settings using environment variables
 
 Using environment variables you can tweak few parameters to change the frequency of blocks and the  deploys processing speed.
@@ -111,21 +113,13 @@ Browsers block direct RPC calls to Casper nodes due to CORS. If you're developin
 The `cors` folder in this repository contains a Docker Compose configuration to start a node.js server running `cors-anywhere` in addition to the NCTL container. To start both containers run the following command:
 
 ```bash
-cd cors
-docker compose up
+docker-compose --profile cors-anywhere up
 ```
 
 Next, change your web app configuration to send the RPC calls to the node.js server indicating the casper node it has to redirect the traffic to:
 
 ```
 http://127.0.0.1:11100/http://mynctl:11101/rpc
-```
-
-If you require a network with predefined accounts, starts the containers with this other compose file:
-
-```bash
-cd cors
-docker compose -f .\docker-compose-with-predefined-accounts.yml up
 ```
 
 ## Use the Docker image in a GitHub action
