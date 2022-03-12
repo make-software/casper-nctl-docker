@@ -69,9 +69,11 @@ Using environment variables you can tweak few parameters to change the frequency
 
 | Environment variable   | Default value | Description                                                                                                                                                                                                                                                                           |
 |------------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| MINIMUM_ROUND_EXPONENT | 12            | Integer between 0 and 255.  The power of two that is the number of milliseconds in the minimum round length, and therefore the minimum delay between a block and its child.  E.g. 12 means 2^12 milliseconds, i.e. about 4 seconds.                                                   |
-| MAXIMUM_ROUND_EXPONENT | 19            | Integer between 0 and 255.  Must be greater than `minimum_round_exponent`.  The power of two that is the number of milliseconds in the maximum round length, and therefore the maximum delay between a block and its child.  E.g. 19 means 2^19 milliseconds, i.e. about 8.7 minutes. |
+| MINIMUM_ROUND_EXPONENT | 12            | Integer between 0 and 255 (0 included).  The power of two that is the number of milliseconds in the minimum round length, and therefore the minimum delay between a block and its child.  E.g. 12 means 2^12 milliseconds, i.e. about 4 seconds.                                                   |
+| MAXIMUM_ROUND_EXPONENT | 19            | Integer between 0 and 255 (255 included).  Must be greater than `minimum_round_exponent`.  The power of two that is the number of milliseconds in the maximum round length, and therefore the maximum delay between a block and its child.  E.g. 19 means 2^19 milliseconds, i.e. about 8.7 minutes. |
 | DEPLOY_DELAY           | 1min          | Deploys are only proposed in a new block if they have been received at least this long ago.                                                                                                                                                                                           |
+
+:warning: **Change these values carefully**. Too low or too high minimum/maximum round exponent values will make the nodes malfunction.
 
 You can also use your custom chainspec.toml and config.toml files:
 
