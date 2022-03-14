@@ -59,7 +59,6 @@ def test_assets_are_present(host):
 
     assert host.file("/home/casper/net-1-predefined-accounts.tar.gz").exists
     assert host.file("/home/casper/restart.sh").exists
-    assert host.file("/home/casper/restart-with-predefined-accounts.sh").exists
 
 def test_casper_client_is_present(host):
 
