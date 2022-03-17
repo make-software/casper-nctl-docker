@@ -32,7 +32,7 @@ RUN git clone https://github.com/casper-network/casper-node-launcher.git ~/caspe
     && source ~/casper-node/utils/nctl/sh/assets/compile.sh 
 
 # run clean-build-artifacts.sh to remove intermediate files and keep the image lighter
-COPY --chown=casper:casper ./clean-build-artifacts.sh .
+COPY ./clean-build-artifacts.sh .
 RUN chmod +x clean-build-artifacts.sh
 RUN ./clean-build-artifacts.sh
 
