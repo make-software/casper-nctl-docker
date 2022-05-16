@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ARG GITBRANCH=release-1.4.4
+ARG GITBRANCH=release-1.4.6
 
 # DEBIAN_FRONTEND required for tzdata dependency install
 RUN apt-get update \
@@ -27,8 +27,10 @@ ENV NCTL_COMPILE_TARGET="release"
 
 # clone the casper-node repos and build binaries
 RUN git clone https://github.com/casper-network/casper-node-launcher.git ~/casper-node-launcher \
-    && cd ~/casper-node-launcher && cargo build --release \
-    && git clone -b $GITBRANCH https://github.com/casper-network/casper-node.git ~/casper-node \
+    && cd ~/casper-node-launcher && cargo build --release
+RUN git clone -b main https://github.com/casper-ecosystem/casper-client-rs ~/casper-client-rs \
+    && cd ~/casper-client-rs && cargo build --release
+RUN git clone -b $GITBRANCH https://github.com/casper-network/casper-node.git ~/casper-node \
     && source ~/casper-node/utils/nctl/sh/assets/compile.sh 
 
 # run clean-build-artifacts.sh to remove intermediate files and keep the image lighter
@@ -59,13 +61,15 @@ WORKDIR /home/casper
 RUN python3 -m pip install toml
 
 COPY --from=0 --chown=casper:casper /root/casper-node-launcher ./casper-node-launcher
+COPY --from=0 --chown=casper:casper /root/casper-client-rs ./casper-client-rs
 COPY --from=0 --chown=casper:casper /root/casper-node ./casper-node
 
 ENV NCTL="/home/casper/casper-node/utils/nctl"
 ENV NCTL_CASPER_HOME="/home/casper/casper-node"
 ENV NCTL_CASPER_NODE_LAUNCHER_HOME="/home/casper/casper-node-launcher"
+ENV NCTL_CASPER_CLIENT_HOME="/home/casper/casper-client-rs"
 RUN echo "source casper-node/utils/nctl/activate" >> .bashrc
-RUN echo "alias casper-client=/home/casper/casper-node/target/release/casper-client" >> .bashrc
+RUN echo "alias casper-client=/home/casper/casper-client-rs/target/release/casper-client" >> .bashrc
 
 COPY --chown=casper:casper ./restart.sh .
 COPY --chown=casper:casper ./net-1-predefined-accounts.tar.gz .

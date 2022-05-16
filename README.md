@@ -147,7 +147,7 @@ jobs:
         # Docker Hub image
         image: makesoftware/casper-nctl:latest
         options: --name casper-nctl
-        environment:
+        env:
           PREDEFINED_ACCOUNTS: 'true'
           MINIMUM_ROUND_EXPONENT: '12'
           MAXIMUM_ROUND_EXPONENT: '14'
