@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ARG GITBRANCH=release-1.4.6
+ARG GITBRANCH=release-1.4.8
 
 # DEBIAN_FRONTEND required for tzdata dependency install
 RUN apt-get update \
@@ -17,7 +17,7 @@ RUN curl -Ls https://github.com/Kitware/CMake/releases/download/v3.17.3/cmake-3.
 
 # install rust nigthly and rustup
 RUN curl -f -L https://static.rust-lang.org/rustup.sh -O \
-    && sh rustup.sh -y --default-toolchain "nightly-2021-12-15"
+    && sh rustup.sh -y 
 ENV PATH="$PATH:/root/.cargo/bin"
 
 # set few environment variables needed for the nctl build scripts
