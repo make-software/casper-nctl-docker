@@ -62,7 +62,7 @@ def test_assets_are_present(host):
 
 def test_casper_client_is_present(host):
 
-    cmd = host.run("/home/casper/casper-node/target/release/casper-client --help")
+    cmd = host.run("/home/casper/casper-client-rs/target/release/casper-client --help")
     assert cmd.rc == 0
 
 def test_rpc_is_responsive(host):
