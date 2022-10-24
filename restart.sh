@@ -14,7 +14,7 @@ PATH_TO_CONFIG_TOML=${PATH_TO_CONFIG_TOML:-"${NCTL_CASPER_HOME}/resources/local/
 ##
 [[ $DEPLOY_DELAY != "" ]] && sed -E "s/^#?(deploy_delay = ).+$/\1 '$DEPLOY_DELAY'/" $PATH_TO_CONFIG_TOML > $PATH_TO_CONFIG_TOML.mod && PATH_TO_CONFIG_TOML=$PATH_TO_CONFIG_TOML.mod
 
-alias casper-client=/home/casper/casper-node/target/release/casper-client
+alias casper-client=/home/casper/casper-client-rs/target/release/casper-client
 source $NCTL/activate
 source $NCTL/sh/assets/teardown.sh
 source $NCTL/sh/assets/setup.sh config_path=$PATH_TO_CONFIG_TOML chainspec_path=$PATH_TO_CHAINSPEC
