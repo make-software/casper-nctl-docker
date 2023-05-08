@@ -5,7 +5,7 @@
 To build the NCTL docker image run `docker build` as follows:
 
 ```bash
-docker build -f casper-nctl.Dockerfile --build-arg GITBRANCH=release-1.4.4 -t casper-nctl:v144 .
+docker build -f casper-nctl.Dockerfile --build-arg GITBRANCH=release-1.4.15 -t casper-nctl:v1415 .
 ```
 
 The argument `GITBRANCH` indicates which branch from the `casper-node` repository docker 
@@ -16,7 +16,7 @@ at the moment of writing these instructions. To keep other scripts independent o
 tag the image also as `latest` once the first build completes.
 
 ```bash
-docker tag casper-nctl:v144 casper-nctl:latest
+docker tag casper-nctl:v1415 casper-nctl:latest
 ```
 
 ## Test the docker image
