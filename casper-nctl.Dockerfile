@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ARG GITBRANCH=release-1.5.2
+ARG GITBRANCH=release-1.5.3
 
 # DEBIAN_FRONTEND required for tzdata dependency install
 RUN apt-get update \
@@ -28,7 +28,7 @@ ENV NCTL_COMPILE_TARGET="release"
 # clone the casper-node repos and build binaries
 RUN git clone https://github.com/casper-network/casper-node-launcher.git ~/casper-node-launcher \
     && cd ~/casper-node-launcher && cargo build --release
-RUN git clone -b main https://github.com/casper-ecosystem/casper-client-rs ~/casper-client-rs \
+RUN git clone -b release-2.0.0 https://github.com/casper-ecosystem/casper-client-rs ~/casper-client-rs \
     && cd ~/casper-client-rs && cargo build --release
 RUN git clone -b $GITBRANCH https://github.com/casper-network/casper-node.git ~/casper-node \
     && source ~/casper-node/utils/nctl/sh/assets/compile.sh 
