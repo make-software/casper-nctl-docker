@@ -1,0 +1,3 @@
+# python env and test outputs
+env/*
+test/__pycache__/*
