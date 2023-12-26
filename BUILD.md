@@ -5,18 +5,21 @@
 To build the NCTL docker image run `docker build` as follows:
 
 ```bash
-docker build -f casper-nctl.Dockerfile --build-arg GITBRANCH=release-1.4.15 -t casper-nctl:v1415 .
+docker build -f casper-nctl.Dockerfile --build-arg NODE_GITBRANCH=release-1.5.4 --build-arg CLIENT_GITBRANCH=release-2.0.0 -t casper-nctl:v154 .
 ```
 
-The argument `GITBRANCH` indicates which branch from the `casper-node` repository docker 
+The argument `NODE_GITBRANCH` indicates which branch from the `casper-node` repository docker 
 will download and build.
 
-In the command above, the image is tagged as v144, which is the latest `casper-node` version 
+The argument `CLIENT_GITBRANCH` indicates which branch from the `casper-client-rs` repository docker 
+will download and build.
+
+In the command above, the image is tagged as v154, which is the latest `casper-node` version 
 at the moment of writing these instructions. To keep other scripts independent of the version, 
 tag the image also as `latest` once the first build completes.
 
 ```bash
-docker tag casper-nctl:v1415 casper-nctl:latest
+docker tag casper-nctl:v154 casper-nctl:latest
 ```
 
 ## Test the docker image
@@ -31,7 +34,7 @@ pip install pytest testinfra
 Then, run `pytest` indicating the name of the docker image to test:
 
 ```
-pytest --image casper-nctl:v144
+pytest --image casper-nctl:v154
 ```
 
 ## Configure Docker Hub Automated Builds
