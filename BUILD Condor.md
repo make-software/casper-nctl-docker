@@ -48,5 +48,5 @@ git checkout feat-2.0
 4. Build the image
 
 ```
-docker build -f casper-nctl-condor.Dockerfile -t casper-nctl:feat-2.0 .
+docker build -f casper-nctl-condor.Dockerfile -t casper-nctl:rc3 .
 ```

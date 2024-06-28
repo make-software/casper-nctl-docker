@@ -2,6 +2,7 @@
 cd /root
 mkdir -p bucket/casper-node
 mv casper-node/target/release/casper-node bucket/casper-node/
+mv casper-node/target/release/global-state-update-gen bucket/casper-node/
 mv casper-node/target/wasm32-unknown-unknown/release/*.wasm bucket/casper-node/
 mv casper-node/resources bucket/casper-node/
 

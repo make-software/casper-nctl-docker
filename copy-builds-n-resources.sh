@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /home/casper
 
-mkdir -p casper-node/target/release && mv bucket/casper-node/casper-node casper-node/target/release/casper-node
+mkdir -p casper-node/target/release && mv bucket/casper-node/casper-node casper-node/target/release/casper-node  && mv bucket/casper-node/global-state-update-gen casper-node/target/release/global-state-update-gen
 mkdir -p casper-node/target/wasm32-unknown-unknown/release && mv bucket/casper-node/*.wasm casper-node/target/wasm32-unknown-unknown/release
 cp -r bucket/casper-node/resources/ casper-node/
 

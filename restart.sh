@@ -15,11 +15,11 @@ PATH_TO_CONFIG_TOML=${PATH_TO_CONFIG_TOML:-"${NCTL_CASPER_HOME}/resources/local/
 #[[ $DEPLOY_DELAY != "" ]] && sed -E "s/^#?(deploy_delay = ).+$/\1 '$DEPLOY_DELAY'/" $PATH_TO_CONFIG_TOML > $PATH_TO_CONFIG_TOML.mod && PATH_TO_CONFIG_TOML=$PATH_TO_CONFIG_TOML.mod
 
 alias casper-client=/home/casper/casper-client-rs/target/release/casper-client
-source /home/casper/casper-nctl/activate
+source $NCTL/activate
 source $NCTL/sh/assets/teardown.sh
 source $NCTL/sh/assets/setup.sh config_path=$PATH_TO_CONFIG_TOML chainspec_path=$PATH_TO_CHAINSPEC
 if [ "$PREDEFINED_ACCOUNTS" = "true" ]; then
-    tar -zxvf net-1-predefined-accounts.tar.gz -C /home/casper/casper-nctl/assets/net-1/
+    tar -zxvf net-1-predefined-accounts.tar.gz -C $NCTL/assets/net-1/
 fi
 source $NCTL/sh/node/start.sh
-tail -f /home/casper/casper-nctl/assets/net-1/nodes/node-1/logs/stderr.log
+tail -f $NCTL/assets/net-1/nodes/node-1/logs/stderr.log
