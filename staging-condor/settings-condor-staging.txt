@@ -1,0 +1,6 @@
+export NCTL_STAGE_SHORT_NAME="condor"
+export NCTL_STAGE_DESCRIPTION="Testing upgrade from v156 to v200 (aka Condor)"
+export NCTL_STAGE_TARGETS=(
+    "1_5_6:casper-node-v156:casper-client-rs-v156"
+    "2_0_0:casper-node:casper-client-rs"
+)

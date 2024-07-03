@@ -3,8 +3,8 @@ param (
     [String]$container
 )
 
-$NCTL_DOCKER_CONTAINER="mynctl"
-$NCTL_HOME="/home/casper/casper-node/utils/nctl"
+$NCTL_DOCKER_CONTAINER="casper-nctl"
+$NCTL_HOME="/home/casper/casper-nctl/"
 
 if($PSBoundParameters.ContainsKey('container')) {
     $NCTL_DOCKER_CONTAINER=$container
@@ -13,6 +13,9 @@ if($PSBoundParameters.ContainsKey('container')) {
 # ###############################################################
 # ALIASES
 # ###############################################################
+
+# casper-client
+function casper-client($params) {docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "source $NCTL_HOME/assets/net-1/bin/casper-client $params" } 
 
 # Assets.
 function nctl-assets-dump($params) {docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "source $NCTL_HOME/sh/assets/dump.sh $params" } 

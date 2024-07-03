@@ -1,9 +1,10 @@
 version: '3'
 
 services:
-  cspr-nctl:
-    image: casper-nctl:rc3
-    container_name: casper-nctl
+  casper-nctl:
+    #image: makesoftware/casper-nctl:v156
+    image: casper-nctl-staging:rc3
+    container_name: casper-nctl-staging
     ports:
       - 11101-11105:11101-11105
       - 14101-14105:14101-14105
@@ -13,16 +14,14 @@ services:
       PREDEFINED_ACCOUNTS: 'true'
       #PATH_TO_CONFIG_TOML: '/home/casper/config/config.toml'
       #PATH_TO_CHAINSPEC: '/home/casper/config/chainspec.toml'
-      #MINIMUM_ROUND_EXPONENT: '12'
-      #MAXIMUM_ROUND_EXPONENT: '14'
-      DEPLOY_DELAY: '5sec'
+
   nctlexplorer:
     image: makesoftware/casper-nctl-explorer:latest
-    container_name: webexplorer
+    container_name: nctlexplorer-condor
     tty: true
     environment:
-      Casper.Network.SDK.Web__NodeAddress: 'http://casper-nctl:11101'
-      Casper.Network.SDK.Web__SSEHost: 'casper-nctl'
+      Casper.Network.SDK.Web__NodeAddress: 'http://casper-nctl-staging:11101'
+      Casper.Network.SDK.Web__SSEHost: 'casper-nctl-staging'
     ports:
       - 8080:80
 
