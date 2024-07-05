@@ -14,7 +14,9 @@ git checkout feat-2.0
 
 ```
 git clone https://github.com/casper-network/casper-node.git
+cd casper-node
 git checkout release-2.0.0-rc3
+cd ..
 ```
 
 3. Build the image
