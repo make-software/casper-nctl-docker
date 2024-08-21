@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ARG NODE_GITBRANCH=release-1.5.7
+ARG NODE_GITBRANCH=release-1.5.8
 ARG CLIENT_GITBRANCH=release-2.0.0
 
 # DEBIAN_FRONTEND required for tzdata dependency install

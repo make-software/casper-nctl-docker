@@ -3,7 +3,7 @@
 > **Warning**
 > Images published on Docker Hub are not stable on Apple computers with M1/M2 chips. We recommend that you build the docker image locally using the  [BUILD](./BUILD.md) instructions.
 
-[NCTL](https://github.com/casper-network/casper-node/tree/release-1.5.7/utils/nctl) is a CLI application to control one or multiple Casper networks locally. Many developers wish to spin up relatively small test networks to localize their testing before deploying to the blockchain.
+[NCTL](https://github.com/casper-network/casper-node/tree/release-1.5.8/utils/nctl) is a CLI application to control one or multiple Casper networks locally. Many developers wish to spin up relatively small test networks to localize their testing before deploying to the blockchain.
 
 ## How to use this image
 
@@ -40,7 +40,7 @@ In a Powershell terminal, run:
 
 where `mynctl` is the name of the container.
 
-Now you can write in the host machine commands like `nctl-view-faucet-account`, `nctl-transfer-native`, etc. For a complete list of commands, visit [this page](https://github.com/casper-network/casper-node/blob/release-1.5.7/utils/nctl/docs/commands.md).
+Now you can write in the host machine commands like `nctl-view-faucet-account`, `nctl-transfer-native`, etc. For a complete list of commands, visit [this page](https://github.com/casper-network/casper-node/blob/release-1.5.8/utils/nctl/docs/commands.md).
 
 Sometimes you may need the secret key of the faucet, a node or one of the predefined users. After activating `nctl-*` commands you can execute the following commands:
 
