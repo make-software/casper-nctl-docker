@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  cspr-nctl:
-    image: casper-nctl:rc3
+  casper-nctl:
+    image: makesoftware/casper-nctl:v200-rc4
     container_name: casper-nctl
     ports:
       - 11101-11105:11101-11105
@@ -11,13 +11,9 @@ services:
       - 25101-25105:25101-25105
     environment:
       PREDEFINED_ACCOUNTS: 'true'
-      #PATH_TO_CONFIG_TOML: '/home/casper/config/config.toml'
-      #PATH_TO_CHAINSPEC: '/home/casper/config/chainspec.toml'
-      #MINIMUM_ROUND_EXPONENT: '12'
-      #MAXIMUM_ROUND_EXPONENT: '14'
       DEPLOY_DELAY: '5sec'
   nctlexplorer:
-    image: makesoftware/casper-nctl-explorer:latest
+    image: makesoftware/casper-nctl-explorer:0.2.3-beta
     container_name: webexplorer
     tty: true
     environment:
@@ -25,15 +21,3 @@ services:
       Casper.Network.SDK.Web__SSEHost: 'casper-nctl'
     ports:
       - 8080:80
-
-  cors-anywhere:
-    container_name: cors-anywhere
-    profiles: ["cors-anywhere"]
-    build:
-      context: ./cors
-      dockerfile: cors-anywhere.Dockerfile
-    tty: true
-    environment:
-      PORT: 11100
-    ports:
-      - 11100:11100

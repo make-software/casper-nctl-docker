@@ -29,7 +29,7 @@ ENV NCTL_CASPER_SIDECAR_HOME="/root/casper-sidecar"
 ENV NCTL_COMPILE_TARGET="release"
 
 # copy the casper-node repo from host machine and build binaries
-COPY ./casper-node /root/casper-node
+RUN git clone -b feat-2.0 https://github.com/casper-network/casper-node.git /root/casper-node
 RUN source ~/casper-node/ci/nctl_compile.sh 
 RUN source ~/casper-nctl/sh/assets/compile_sidecar.sh
 RUN source ~/casper-nctl/sh/assets/compile_node_launcher.sh

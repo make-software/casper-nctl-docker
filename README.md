@@ -1,6 +1,7 @@
 # Casper NCTL - Docker Container
 
-> **Warning**
+
+> **Information**
 > Images published on Docker Hub are not stable on Apple computers with M1/M2 chips. We recommend that you build the docker image locally using the  [BUILD](./BUILD.md) instructions.
 
 [NCTL](https://github.com/casper-network/casper-node/tree/release-1.5.6/utils/nctl) is a CLI application to control one or multiple Casper networks locally. Many developers wish to spin up relatively small test networks to localize their testing before deploying to the blockchain.
@@ -9,7 +10,7 @@
 
 ### Start a network with five nodes
 
-To create a container with the NCTL image write:
+To create a container that spins up a network with five validator nodes, write the following command in the :
 
 ```bash
 docker run --rm -it --name mynctl -d -p 11101:11101 -p 14101:14101 -p 18101:18101 makesoftware/casper-nctl
@@ -21,7 +22,7 @@ Alternatively, you can use `docker-compose` to start and stop the container. Dow
 in this repository and write:
 
 ```bash 
-docker-compose up
+docker compose up
 ```
 
 ### Activate `nctl-*` commands

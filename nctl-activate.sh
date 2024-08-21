@@ -9,7 +9,7 @@ export NCTL_HOME=/home/casper/casper-nctl
 
 # casper-client
 casper-client() { docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "$NCTL_HOME/assets/net-1/bin/casper-client $*"; } 
-casper-client2() { echo hola $@; }
+
 # Assets.
 nctl-assets-dump() { docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "source $NCTL_HOME/sh/assets/dump.sh $@"; } 
 nctl-assets-ls() { docker exec -t $NCTL_DOCKER_CONTAINER /bin/bash -c "source $NCTL_HOME/sh/assets/list.sh $@"; } 

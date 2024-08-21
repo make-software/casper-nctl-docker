@@ -2,8 +2,7 @@ version: '3'
 
 services:
   casper-nctl:
-    #image: makesoftware/casper-nctl:v156
-    image: casper-nctl-staging:rc3
+    image: makesoftware/casper-nctl-staging:v158-v200-rc4
     container_name: casper-nctl-staging
     ports:
       - 11101-11105:11101-11105
@@ -12,11 +11,10 @@ services:
       - 25101-25105:25101-25105
     environment:
       PREDEFINED_ACCOUNTS: 'true'
-      #PATH_TO_CONFIG_TOML: '/home/casper/config/config.toml'
-      #PATH_TO_CHAINSPEC: '/home/casper/config/chainspec.toml'
-
+    volumes:
+      - ./chainspec.toml.in:/home/casper/casper-node/resources/local/chainspec.toml.in
   nctlexplorer:
-    image: makesoftware/casper-nctl-explorer:latest
+    image: makesoftware/casper-nctl-explorer:0.2.3-beta
     container_name: nctlexplorer-condor
     tty: true
     environment:

@@ -10,28 +10,35 @@ cd casper-nctl-docker
 git checkout feat-2.0
 ````
 
-2. Clone the casper-node repo (inside casper-nctl-docker folder) and checkout `release-2.0.0-rc3` branch
+2. Build the image
 
 ```
-git clone https://github.com/casper-network/casper-node.git
-git checkout release-2.0.0-rc3
+docker build -f casper-nctl-condor.Dockerfile -t casper-nctl:v200-rc4 .
 ```
 
-3. Build the image
-
-```
-docker build -f casper-nctl-condor.Dockerfile -t casper-nctl:rc3 .
-```
-
-4. Run a container
+3. Run a container
 
 ```
 docker-compose up casper-nctl
 ```
 
-## Using `casper-client`
+### NCTL Explorer (beta)
 
-The docker image contains `casper-client` command line tool. You can use it from a docker container bash terminal. Or, from your local machine activating the nctl-* scripts:
+NCTL Explorer is a simple web block explorer for NCTL. It listens to the SSE channel and shows lists of Blocks, Steps and Transaction events. It also allows to query data from the RPC interface. 
+
+To start the NCTL explorer together with the network run:
+
+```
+docker-compose up casper-nctl nctlexplorer
+```
+
+Browse to `http://localhost:8080/`.
+
+### Using `casper-client`
+
+The docker image contains `casper-client` command line tool. You can use it from a docker container bash terminal. Or, from your local machine activating the nctl-* scripts.
+
+In a separate terminal window run:
 
 ```
 source nctl-activate.sh casper-nctl
@@ -39,19 +46,19 @@ source nctl-activate.sh casper-nctl
 casper-client get-node-status --node-address http://127.0.0.1:11101
 ```
 
-## Build NCTL Docker image with v156 and Condor
+## Build NCTL Docker image with v158 and Condor
 
-In some cases you may want to start a network with version 1.5.6, operate with,
+In some cases you may want to start a network with version 1.5.8, operate with,
 and at some point in time, upgrade it to Condor.
 
 Steps:
 
-1. Build the `casper-nctl:rc3` image following the steps in the previous section.
+1. Build the `casper-nctl:rc4` image following the steps in the previous section.
 
-2. Build the staging image. This image depends on `v156` (from docker hub) and `rc3` (local) images. It copies binaries from both images to a new staging image.
+2. Build the staging image. This image depends on `v158` (from docker hub) and `rc4` (local) images. It copies binaries from both images to a new staging image.
 
 ```
-docker build -f casper-nctl-staging.Dockerfile -t casper-nctl-staging:rc3 .
+docker build -f casper-nctl-staging.Dockerfile -t casper-nctl-staging:v200-rc4 .
 ```
 
 3. Run a container:
@@ -69,12 +76,6 @@ source nctl-activate.sh casper-nctl-staging
 ```
 
 5. Stage the upgrade to 2.0.0:
-
-```
-nctl-assets-upgrade-from-stage
-```
-
-Or within the container cli:
 
 ```
 nctl-assets-upgrade-from-stage
