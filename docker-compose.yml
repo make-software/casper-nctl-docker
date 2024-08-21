@@ -8,6 +8,7 @@ services:
       - 11101-11105:11101-11105
       - 14101-14105:14101-14105
       - 18101-18105:18101-18105
+      - 25101-25105:25101-25105
     environment:
       PREDEFINED_ACCOUNTS: 'true'
       #PATH_TO_CONFIG_TOML: '/home/casper/config/config.toml'
