@@ -13,7 +13,7 @@ git checkout feat-2.0
 2. Build the image
 
 ```
-docker build -f casper-nctl-condor.Dockerfile -t casper-nctl:v200-rc4 .
+docker build -f casper-nctl-condor.Dockerfile -t casper-nctl:v200-rc5 .
 ```
 
 3. Run a container
@@ -58,7 +58,7 @@ Steps:
 2. Build the staging image. This image depends on `v158` (from docker hub) and `rc4` (local) images. It copies binaries from both images to a new staging image.
 
 ```
-docker build -f casper-nctl-staging.Dockerfile -t casper-nctl-staging:v200-rc4 .
+docker build -f casper-nctl-staging.Dockerfile -t casper-nctl-staging:v200-rc5 .
 ```
 
 3. Run a container:

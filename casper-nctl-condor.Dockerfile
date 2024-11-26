@@ -29,11 +29,12 @@ ENV NCTL_CASPER_SIDECAR_HOME="/root/casper-sidecar"
 ENV NCTL_COMPILE_TARGET="release"
 
 # copy the casper-node repo from host machine and build binaries
-RUN git clone -b feat-2.0 https://github.com/casper-network/casper-node.git /root/casper-node
+WORKDIR ~/
+RUN git clone -b feat-2.0 https://github.com/casper-network/casper-node.git ~/casper-node
 RUN source ~/casper-node/ci/nctl_compile.sh 
-RUN source ~/casper-nctl/sh/assets/compile_sidecar.sh
-RUN source ~/casper-nctl/sh/assets/compile_node_launcher.sh
-RUN source ~/casper-nctl/sh/assets/compile_client.sh
+#RUN source ~/casper-nctl/sh/assets/compile_sidecar.sh
+#RUN source ~/casper-nctl/sh/assets/compile_node_launcher.sh
+#RUN source ~/casper-nctl/sh/assets/compile_client.sh
 
 # save built binaries and resources folders to a temp folder to 
 # copy them back in the second stage
@@ -82,7 +83,7 @@ RUN echo "alias casper-client=/home/casper/casper-client-rs/target/release/caspe
 COPY --chown=casper:casper ./restart.sh .
 COPY --chown=casper:casper ./net-1-predefined-accounts.tar.gz .
 
-EXPOSE 11101-11105 14101-14105 18101-18105
+EXPOSE 11101-11105 14101-14105 18101-18105 25101:25105 28101:28105
 
 HEALTHCHECK CMD /home/casper/casper-client-rs/target/release/casper-client get-block --node-address http://localhost:11101/rpc | jq 'has("result")'
 

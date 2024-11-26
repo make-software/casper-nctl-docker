@@ -2,18 +2,19 @@ version: '3'
 
 services:
   casper-nctl:
-    image: makesoftware/casper-nctl:v200-rc4
+    image: makesoftware/casper-nctl:v200-rc5
     container_name: casper-nctl
     ports:
       - 11101-11105:11101-11105
       - 14101-14105:14101-14105
       - 18101-18105:18101-18105
       - 25101-25105:25101-25105
+      - 28101-28105:28101-28105
     environment:
       PREDEFINED_ACCOUNTS: 'true'
       DEPLOY_DELAY: '5sec'
   nctlexplorer:
-    image: makesoftware/casper-nctl-explorer:0.2.3-beta
+    image: makesoftware/casper-nctl-explorer:0.3.0-beta
     container_name: webexplorer
     tty: true
     environment:
